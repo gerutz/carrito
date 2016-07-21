@@ -1,4 +1,5 @@
 
+
 import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 
@@ -42,6 +43,16 @@ class SimpleApp extends Component {
       ],
       carrito: []
     };
+  }
+
+  componentDidMount(){
+    const  moltin = new Moltin({publicId: 'n9Co6KXc7edVnx0JrruniOo21yp1IgbhtkktkOHct6'});
+    moltin.Authenticate(function() {
+      moltin.Product.Search({status: 1}, function(products) {
+         console.log(products);
+       });
+
+    });
   }
 
   onAgregar(id, cantidad) {
