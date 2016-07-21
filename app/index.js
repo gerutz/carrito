@@ -7,53 +7,37 @@ import styles from './styles';
 
 const node = document.getElementById('content');
 
-
-
 class SimpleApp extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      stock: [
-        {
-          id: 1,
-          nombre: 'Harry potter',
-          precio: 10,
-          cantidad : 0
-        },
-        {
-          id: 2,
-          nombre: 'Indiana Jones',
-          precio:15,
-          cantidad: 0
-
-        },
-        {
-          id: 3,
-          nombre: 'Star Wars',
-          precio: 20,
-          cantidad: 0
-        },
-        {
-          id: 4,
-          nombre: 'La venganza de los Teletubbies',
-          precio: 30,
-          cantidad:0
-        }
-      ],
+      stock: [],
       carrito: []
     };
   }
 
   componentDidMount(){
     const  moltin = new Moltin({publicId: 'n9Co6KXc7edVnx0JrruniOo21yp1IgbhtkktkOHct6'});
-    moltin.Authenticate(function() {
-      moltin.Product.Search({status: 1}, function(products) {
-         console.log(products);
-       });
 
+    moltin.Authenticate(() => {
+      moltin.Product.Search({status: 1}, (products)=> {
+
+        const stock = products.map((producto)=>{
+          return {
+            //description : producto.description,
+            id : producto.id,
+            precio : producto.price.data.raw.with_tax,
+            cantidad : producto.stock_level,
+            nombre : producto.title
+          }
+        });
+
+        this.setState({stock : stock});
+       });
     });
   }
+
 
   onAgregar(id, cantidad) {
     const articulo = this.state.stock.find((producto) => producto.id === id);
@@ -61,7 +45,6 @@ class SimpleApp extends Component {
     const nuevoCarrito = this.state.carrito.concat(articulo);
     const nuevoStock = this.state.stock.filter((producto) => producto.id !== id);
     console.log(articulo);
-
 
     this.setState({ stock: nuevoStock, carrito: nuevoCarrito });
   }
