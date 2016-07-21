@@ -1,0 +1,22 @@
+.wrapper {
+  border: 1px solid black;
+  display: inline-block;
+  width: 95%;
+}
+
+.leftCol {
+  width: 45%;
+  float: left;
+}
+
+.rightCol {
+  width: 45%;
+  float: right;
+}
+
+.articulo {
+  border: 1px solid red;
+  margin: 2% 10% 5% 5%;
+  padding: 5%;
+  width: 50%;
+}
