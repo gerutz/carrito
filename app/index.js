@@ -43,10 +43,15 @@ class SimpleApp extends Component {
     const articulo = this.state.stock.find((producto) => producto.id === id);
     articulo.cantidad = cantidad;
     const nuevoCarrito = this.state.carrito.concat(articulo);
-    const nuevoStock = this.state.stock.filter((producto) => producto.id !== id);
+  //  const nuevoStock = this.state.stock.filter((producto) => producto.id !== id);
     console.log(articulo);
 
-    this.setState({ stock: nuevoStock, carrito: nuevoCarrito });
+  //  this.setState({ stock: nuevoStock, carrito: nuevoCarrito });
+
+    this.setState({carrito: nuevoCarrito });
+
+    const nuevoStock = this.state.stock.map((producto) => producto.cantidad === 5);
+  
   }
 
   onRemover(id) {
